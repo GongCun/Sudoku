@@ -4,7 +4,7 @@
 vector < vector<bool> > possible;
 vector < vector<int> > _groups_of(81);
 
-const int nCol = 9 * (9 + 9 + + 9);
+const int nCol = 9 * (9 + 9 + 9 + 9);
 
 void assign(vector< vector<bool> > &p, int k, int val) {
     vector<bool> v(nCol, false);
@@ -80,7 +80,9 @@ int main() {
     getline(cin, line);
     init(line);
     DLX dlx(possible);
-    dlx.solve(solutions);
-    print_solve(cout, solutions);
+    if (dlx.solve(solutions))
+        print_solve(cout, solutions);
+    else
+        cout << "no solutions" << endl;
 }
 
