@@ -1,16 +1,14 @@
 #include "dlx.hpp"
 
-using namespace std;
-
-DLX::DLX(vecter< vecter<bool> >& p_) {
+DLX::DLX(vector< vector<bool> >& p_) {
 
     nRow = p_.size();
     nCol = p_[0].size();
     header = new Node();
     
-    matrix = vecter< vecter<Node> >(p_.size());
+    matrix = vector< vector<Node> >(p_.size());
     for (auto &v : matrix)
-        v = vecter<Node>(nCol);
+        v = vector<Node>(nCol);
 
     for (auto i = 0; i < nRow; i++) {
         for (auto j = 0; j < nCol; j++) {
@@ -64,8 +62,6 @@ DLX::DLX(vecter< vecter<bool> >& p_) {
     matrix[0][0].left = header;
     matrix[0][nCol - 1].right = header;
 }
-
-// DLX::DLX() {}
 
 Node *DLX::leastOne(void) {
     Node *h = header;
@@ -122,21 +118,24 @@ void DLX::uncover(Node *targetNode) {
     colNode->right->left = colNode;
 }
 
-void DLX::print(ostream &o) const {
-    for (auto &v : solutions)
-        o << v->rowID << " ";
-    o << endl;
-}
+// void DLX::print(ostream &o) const {
+//     for (auto &v : solutions)
+//         o << v->rowID << " ";
+//     o << endl;
+// }
 
-void DLX::solve() {
+bool DLX::solve(vector<Node *>& solutions) {
     if (header->right == header) {
-        print(cout);
-        return;
+        // if (solutions.size() == 81)
+        //     return true;
+        // else
+        //     return false;
+        return true;
     }
 
     Node *column = leastOne();
     if (column == header)
-        return;
+        return false;
 
     cover(column);
 
@@ -147,7 +146,7 @@ void DLX::solve() {
              rightNode = rightNode->right)
             cover(rightNode);
 
-        solve();
+        if (solve(solutions)) return true;
 
         solutions.pop_back();
         column = row->column;
@@ -156,4 +155,5 @@ void DLX::solve() {
             uncover(leftNode);
     }
     uncover(column);
+    return false;
 }
