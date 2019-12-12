@@ -1,7 +1,5 @@
-all: sudoku sudoku2
+all: sudoku
 
-sudoku: sudoku.cpp
-	g++ -Wall --std=c++0x -o $@ $<
+sudoku: sudoku.cpp dlx.cpp
+	g++ --std=c++0x -Wall -o $@ $^
 
-sudoku2: sudoku2.cpp
-	g++ -Wall --std=c++0x -o $@ $<
