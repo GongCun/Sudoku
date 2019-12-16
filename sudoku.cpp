@@ -50,12 +50,13 @@ void init(string s) {
     }
 }
 
-void print_solve(ostream &o, vector<Node *>solutions) {
+void print_solve(ostream &o, vector<int>& solutions) {
     map<int, int> grid;
     const string sep(6, '-');
 
     for (auto &v : solutions) {
-        auto r = possible[v->rowID];
+        // auto r = possible[v->rowID];
+        auto r = possible[v];
         int id = find(r.begin(), r.begin() + 81, true) - r.begin();
         int val = (find(r.begin() + 81, r.begin() + 81 * 2, true) - (r.begin() + 81)) % 9;
         grid[id] = val;
@@ -73,16 +74,23 @@ void print_solve(ostream &o, vector<Node *>solutions) {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    int k = 0;
     string line;
-    vector<Node *> solutions;
+    // vector<Node *> solutions;
+
+    if (argc > 1)
+        k = atoi(argv[1]);
 
     getline(cin, line);
     init(line);
-    DLX dlx(possible);
-    if (dlx.solve(solutions))
-        print_solve(cout, solutions);
-    else
-        cout << "no solutions" << endl;
+
+    distribute(k, new DLX(possible));
+
+    // DLX dlx(possible);
+    // if (dlx.solve(solutions))
+    //     print_solve(cout, solutions);
+    // else
+    //     cout << "no solutions" << endl;
 }
 
