@@ -164,7 +164,7 @@ bool DLX::solve() {
 }
 
 //
-DLX::DLX(Node *h, int nCol_, int nRow_, vector<int>& solutions_) :
+DLX::DLX(Node*& h, int& nCol_, int& nRow_, vector<int>& solutions_) :
     nCol(nCol_), nRow(nRow_),  solutions(solutions_) {
 
     header = new Node();
@@ -241,52 +241,53 @@ void distribute(unsigned k, DLX* root) {
         cout << "level count = " << last - cur << endl;
         while (cur < last) {
 
-            DLX*& q = queue[cur++];
+            DLX* q = queue[cur++];
             // if (q->solve()) {
             //     print_solve(cout, q->solutions);
             // }
             // return;
 
-            DLX dlx(q->header, q->nCol, q->nRow, q->solutions);
-            delete q;
+            // DLX dlx(q->header, q->nCol, q->nRow, q->solutions);
+            // delete q;
 
             if (level == k) {
                 // cout << ">> initial solutions: ";
                 // print_solve(dlx.solutions);
                 // dlx.print();
 
-                if (dlx.solve()) {
+                if (q->solve()) {
                     // cout <<"final solutions: ";
-                    print_solve(cout, dlx.solutions);
+                    print_solve(cout, q->solutions);
                 } else {
                     cout <<"no solutions" << endl;
                 }
                 continue;
             }
 
-            Node *column = dlx.leastOne();
-            if (column == dlx.header) continue;
+            Node *column = q->leastOne();
+            if (column == q->header) continue;
 
-            dlx.cover(column);
+            q->cover(column);
             
             for (Node *row = column->down; row != column; row = row->down) {
                 
                 // cout << "cover " << row->rowID << endl;
-                dlx.solutions.push_back(row->rowID);
+                q->solutions.push_back(row->rowID);
 
                 for (Node *rightNode = row->right; rightNode != row; rightNode = rightNode->right) {
-                    dlx.cover(rightNode);
+                    q->cover(rightNode);
                 }
 
-                queue.push_back(new DLX(dlx.header, dlx.nCol, dlx.nRow, dlx.solutions));
+                queue.push_back(new DLX(q->header, q->nCol, q->nRow, q->solutions));
                 // cout << "queue.size: " << queue.size() << endl;
 
-                dlx.solutions.pop_back();
+                q->solutions.pop_back();
                 column = row->column;
 
                 for (Node *leftNode = row->left; leftNode != row; leftNode = leftNode->left)
-                    dlx.uncover(leftNode);
+                    q->uncover(leftNode);
             }
+            delete q;
         }
         level++;
     }
