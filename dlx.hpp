@@ -57,4 +57,5 @@ public:
 };
 
 void distribute(unsigned, DLX*);
+extern void print_solve(ostream& o, vector<int>&);
 #endif

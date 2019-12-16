@@ -127,12 +127,14 @@ void DLX::uncover(Node *targetNode) {
 
 bool DLX::solve() {
     // cout << "solve()" << endl;
+    bool success = false;
 
     if (header->right == header) {
         // if (solutions.size() == 81)
         //     return true;
         // else
         //     return false;
+        print_solve(cout, solutions);
         return true;
     }
 
@@ -151,7 +153,8 @@ bool DLX::solve() {
              rightNode = rightNode->right)
             cover(rightNode);
 
-        if (solve()) return true;
+        // if (solve()) return true;
+        if (solve()) success = true;
 
         solutions.pop_back();
         column = row->column;
@@ -160,7 +163,7 @@ bool DLX::solve() {
             uncover(leftNode);
     }
     uncover(column);
-    return false;
+    return success;
 }
 
 //
@@ -222,7 +225,6 @@ void DLX::print() {
 //         cout << "solutions is empty" << endl;
 //     }
 // }
-extern void print_solve(ostream& o, vector<int>&);
 
 //
 void distribute(unsigned k, DLX* root) {
@@ -259,12 +261,13 @@ void distribute(unsigned k, DLX* root) {
                 // print_solve(dlx.solutions);
                 // dlx.print();
 
-                if (q->solve()) {
-                    // cout <<"final solutions: ";
-                    print_solve(cout, q->solutions);
-                } else {
-                    cout <<"no solutions" << endl;
-                }
+                // if (q->solve()) {
+                //     // cout <<"final solutions: ";
+                //     print_solve(cout, q->solutions);
+                // } else {
+                //     cout <<"no solutions" << endl;
+                // }
+                q->solve();
                 delete q;
                 continue;
             }
