@@ -160,7 +160,6 @@ bool DLX::solve() {
             uncover(leftNode);
     }
     uncover(column);
-    cout << "false2" << endl;
     return false;
 }
 
@@ -177,16 +176,17 @@ DLX::DLX(Node *h, int nCol_, int nRow_, vector<int>& solutions_) :
     for (Node *col = h->right; col != h; col = col->right) {
         Node *row = col;
         do {
-            Node &n  = matrix[row->rowID][row->colID];
-            n.column = &matrix[0][row->colID];
-            n.rowID  = row->rowID;
-            n.colID  = row->colID;
-            n.left   = &matrix[row->rowID][row->left->colID];
-            n.right  = &matrix[row->rowID][row->right->colID];
-            n.up     = &matrix[row->up->rowID][row->colID];
-            n.down   = &matrix[row->down->rowID][row->colID];
+            Node &n     = matrix[row->rowID][row->colID];
+            n.nodeCount = row->nodeCount;
+            n.rowID     = row->rowID;
+            n.colID     = row->colID;
+            n.column    = &matrix[0][row->colID];
+            n.left      = &matrix[row->rowID][row->left->colID];
+            n.right     = &matrix[row->rowID][row->right->colID];
+            n.up        = &matrix[row->up->rowID][row->colID];
+            n.down      = &matrix[row->down->rowID][row->colID];
 
-            row = row->down;
+            row         = row->down;
         } while (row != col);
     }
 
@@ -278,6 +278,7 @@ void distribute(unsigned k, DLX* root) {
                 }
 
                 queue.push_back(new DLX(dlx.header, dlx.nCol, dlx.nRow, dlx.solutions));
+                cout << "queue.size: " << queue.size() << endl;
 
                 dlx.solutions.pop_back();
                 column = row->column;

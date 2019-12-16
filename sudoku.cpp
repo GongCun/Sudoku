@@ -72,6 +72,8 @@ void print_solve(ostream &o, vector<int>& solutions) {
         }
         o << endl;
     }
+
+    o << endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -88,8 +90,8 @@ int main(int argc, char *argv[]) {
     distribute(k, new DLX(possible));
 
     // DLX dlx(possible);
-    // if (dlx.solve(solutions))
-    //     print_solve(cout, solutions);
+    // if (dlx.solve())
+    //     print_solve(cout, dlx.solutions);
     // else
     //     cout << "no solutions" << endl;
 }
