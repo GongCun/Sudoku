@@ -4,12 +4,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <queue>
 #include <algorithm>
-#include <memory>
 
 using namespace std;
-
 
 struct Node {
     struct Node *left;
@@ -55,6 +52,5 @@ public:
 
 };
 
-typedef unique_ptr<DLX> DLXP;
-void distribute(unsigned, DLXP);
+void distribute(unsigned, DLX*);
 #endif

@@ -87,8 +87,7 @@ int main(int argc, char *argv[]) {
     getline(cin, line);
     init(line);
 
-    // distribute(k, new DLX(possible));
-    distribute(k, DLXP(new DLX(possible)));
+    distribute(k, new DLX(possible));
 
     // DLX dlx(possible);
     // if (dlx.solve())
