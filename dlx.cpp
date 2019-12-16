@@ -225,13 +225,14 @@ void DLX::print() {
 extern void print_solve(ostream& o, vector<int>&);
 
 //
-void distribute(unsigned k, DLX* root) {
+void distribute(unsigned k, DLXP root) {
     if (root->header->right == root->header)
         return;
 
-    vector<DLX *> queue;
+    // vector<DLX *> queue;
+    vector<DLXP> queue;
 
-    queue.push_back(root);
+    queue.push_back(move(root));
     unsigned cur = 0, last = 1, level = 0;
 
     while (cur < queue.size()) {
@@ -241,7 +242,8 @@ void distribute(unsigned k, DLX* root) {
         cout << "level count = " << last - cur << endl;
         while (cur < last) {
 
-            DLX* q = queue[cur++];
+            // DLX* q = queue[cur++];
+            auto q = move(queue[cur++]);
             // if (q->solve()) {
             //     print_solve(cout, q->solutions);
             // }
@@ -278,7 +280,7 @@ void distribute(unsigned k, DLX* root) {
                     q->cover(rightNode);
                 }
 
-                queue.push_back(new DLX(q->header, q->nCol, q->nRow, q->solutions));
+                queue.push_back(DLXP(new DLX(q->header, q->nCol, q->nRow, q->solutions)));
                 // cout << "queue.size: " << queue.size() << endl;
 
                 q->solutions.pop_back();
@@ -287,7 +289,8 @@ void distribute(unsigned k, DLX* root) {
                 for (Node *leftNode = row->left; leftNode != row; leftNode = leftNode->left)
                     q->uncover(leftNode);
             }
-            delete q;
+            // delete q;
+            q = {};
         }
         level++;
     }
