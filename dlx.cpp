@@ -169,9 +169,9 @@ DLX::DLX(Node*& h, int& nCol_, int& nRow_, vector<int>& solutions_) :
 
     header = new Node();
 
-    matrix = vector< vector<Node> >(nRow);
-    for (auto &v : matrix)
-        v = vector<Node>(nCol);
+    matrix = vector< vector<Node> >(nRow, vector<Node>(nCol));
+    // for (auto &v : matrix)
+        // v = vector<Node>(nCol);
 
     for (Node *col = h->right; col != h; col = col->right) {
         Node *row = col;
@@ -238,7 +238,10 @@ void distribute(unsigned k, DLX* root) {
         cout << "level = " << level << endl;
         last = queue.size();
 
+        auto t = last - cur;
+        
         cout << "level count = " << last - cur << endl;
+
         while (cur < last) {
 
             DLX* q = queue[cur++];
@@ -250,7 +253,8 @@ void distribute(unsigned k, DLX* root) {
             // DLX dlx(q->header, q->nCol, q->nRow, q->solutions);
             // delete q;
 
-            if (level == k) {
+            // if (level == k) {
+            if (t >= k) {
                 // cout << ">> initial solutions: ";
                 // print_solve(dlx.solutions);
                 // dlx.print();
