@@ -238,6 +238,7 @@ void distribute(unsigned k, DLX* root) {
         cout << "level = " << level << endl;
         last = queue.size();
 
+        cout << "level count = " << last - cur << endl;
         while (cur < last) {
 
             DLX*& q = queue[cur++];
@@ -278,7 +279,7 @@ void distribute(unsigned k, DLX* root) {
                 }
 
                 queue.push_back(new DLX(dlx.header, dlx.nCol, dlx.nRow, dlx.solutions));
-                cout << "queue.size: " << queue.size() << endl;
+                // cout << "queue.size: " << queue.size() << endl;
 
                 dlx.solutions.pop_back();
                 column = row->column;
