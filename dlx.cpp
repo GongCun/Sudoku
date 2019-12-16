@@ -69,7 +69,6 @@ Node *DLX::leastOne(void) {
     Node *min = h->right;
     h = h->right->right;
     do {
-        // if (h->nodeCount > 0 && h->nodeCount < min->nodeCount)
         if (h->nodeCount < min->nodeCount)
             min = h;
         h = h->right;
@@ -127,6 +126,8 @@ void DLX::uncover(Node *targetNode) {
 // }
 
 bool DLX::solve() {
+    // cout << "solve()" << endl;
+
     if (header->right == header) {
         // if (solutions.size() == 81)
         //     return true;
@@ -136,8 +137,10 @@ bool DLX::solve() {
     }
 
     Node *column = leastOne();
-    if (column == header)
-        return false;
+    // if (column == header) {
+    //     cout << "false1" << endl;
+    //     return false;
+    // }
 
     cover(column);
 
@@ -157,6 +160,7 @@ bool DLX::solve() {
             uncover(leftNode);
     }
     uncover(column);
+    cout << "false2" << endl;
     return false;
 }
 
@@ -237,6 +241,11 @@ void distribute(unsigned k, DLX* root) {
         while (cur < last) {
 
             DLX*& q = queue[cur++];
+            // if (q->solve()) {
+            //     print_solve(cout, q->solutions);
+            // }
+            // return;
+
             DLX dlx(q->header, q->nCol, q->nRow, q->solutions);
             delete q;
 
