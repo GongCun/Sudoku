@@ -261,6 +261,7 @@ void distribute(unsigned k, DLX* root) {
                 } else {
                     cout <<"no solutions" << endl;
                 }
+                delete q;
                 continue;
             }
 
@@ -279,7 +280,7 @@ void distribute(unsigned k, DLX* root) {
                 }
 
                 queue.push_back(new DLX(q->header, q->nCol, q->nRow, q->solutions));
-                // cout << "queue.size: " << queue.size() << endl;
+                cout << "queue.size: " << queue.size() << endl;
 
                 q->solutions.pop_back();
                 column = row->column;

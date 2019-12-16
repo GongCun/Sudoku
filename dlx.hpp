@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+// #include <queue>
 #include <algorithm>
 
 using namespace std;
@@ -33,6 +34,9 @@ public:
     ~DLX() {
         delete header;
         header = NULL;
+        for (auto &v: matrix)
+            v.clear();
+        matrix.clear();
     }
 
     // void free() {
