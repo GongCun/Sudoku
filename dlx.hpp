@@ -4,9 +4,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <algorithm>
+#include <memory>
 
 using namespace std;
+
 
 struct Node {
     struct Node *left;
@@ -29,7 +32,7 @@ public:
     vector<int> solutions;
 
     DLX(vector< vector<bool> >& p_);
-    DLX(Node *, int, int, vector<int>&);
+    DLX(Node*&, int&, int&, vector<int>&);
     ~DLX() {
         delete header;
         header = NULL;
@@ -52,5 +55,6 @@ public:
 
 };
 
-void distribute(unsigned, DLX*);
+typedef unique_ptr<DLX> DLXP;
+void distribute(unsigned, DLXP);
 #endif
